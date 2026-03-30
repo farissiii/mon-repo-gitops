@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: khaliiiiid/mon-app-python:1.0.1  # Jenkins va modifier cette ligne
+        image: khaliiiiid/mon-app-python:1.0.12
         ports:
         - containerPort: 5000
