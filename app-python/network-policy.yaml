@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: flask-app-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: flask-app # Doit correspondre au label dans ton deployment.yaml
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus # Autorise Prometheus à venir lire les métriques
+    ports:
+    - protocol: TCP
+      port: 5000
