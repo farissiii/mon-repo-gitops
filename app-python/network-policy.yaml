@@ -6,18 +6,20 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: flask-app # Doit correspondre au label dans ton deployment.yaml
+      app: flask-app
   policyTypes:
   - Ingress
   ingress:
+  # Règle 1 : Autoriser Prometheus (pour les graphs)
   - from:
-    - podSelector:
+    - namespaceSelector:
         matchLabels:
-          app: prometheus # Autorise Prometheus à venir lire les métriques
+          kubernetes.io/metadata.name: monitoring
     ports:
     - protocol: TCP
       port: 5000
- - from: [] # Vide signifie "Autoriser tout le monde" (Ingress)
+  # Règle 2 : Autoriser le trafic extérieur (ton navigateur)
+  - from: [] # Vide signifie "Autoriser tout le monde" (Ingress)
     ports:
     - protocol: TCP
       port: 5000
