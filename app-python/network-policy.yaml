@@ -17,3 +17,7 @@ spec:
     ports:
     - protocol: TCP
       port: 5000
+ - from: [] # Vide signifie "Autoriser tout le monde" (Ingress)
+    ports:
+    - protocol: TCP
+      port: 5000
