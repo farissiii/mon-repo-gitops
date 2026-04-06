@@ -4,6 +4,7 @@ metadata:
   name: flask-app-service
 spec:
   type: NodePort
+  externalTrafficPolicy: Local 
   selector:
     app: flask-app
   ports:
