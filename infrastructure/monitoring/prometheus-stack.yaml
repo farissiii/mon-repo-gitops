@@ -18,6 +18,7 @@ spec:
             nodePort: 30552
         
         prometheus:
+          # --- CETTE PARTIE EST POUR L'OPERATOR ---
           prometheusSpec:
             retention: 1d
             resources:
@@ -25,29 +26,27 @@ spec:
                 memory: "400Mi"
               limits:
                 memory: "900Mi"
-            
-            # S16: Connexion à Docker et ton PC Local
             additionalScrapeConfigs:
               - job_name: 'docker-jenkins'
                 static_configs:
-                  - targets: ['192.168.1.104:9323'] # IP de ta VM
+                  - targets: ['192.168.1.104:9323']
               - job_name: 'mon-pc-local'
                 static_configs:
-                  - targets: ['192.168.1.15:9182'] # IP de ton PC (à vérifier)
+                  - targets: ['192.168.1.15:9182']
 
-            # S16: Règles d'alertes personnalisées
-            additionalPrometheusRulesMap:
-              custom-rules:
-                groups:
-                  - name: MyDevOpsAlerts
-                    rules:
-                      - alert: FlaskAppDown
-                        expr: up{pod=~"flask-app.*"} == 0
-                        for: 1m
-                        labels:
-                          severity: critical
-                        annotations:
-                          summary: "ALERTE: L'application Python est tombée !"
+          # --- CETTE PARTIE EST POUR LES REGLES (CORRIGÉ ICI) ---
+          additionalPrometheusRulesMap:
+            custom-rules:
+              groups:
+                - name: MyDevOpsAlerts
+                  rules:
+                    - alert: FlaskAppDown
+                      expr: up{pod=~"flask-app.*"} == 0
+                      for: 1m
+                      labels:
+                        severity: critical
+                      annotations:
+                        summary: "ALERTE: L'application Python est tombée !"
 
   destination:
     server: 'https://kubernetes.default.svc'
@@ -59,4 +58,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - ServerSideApply=true # Pour éviter le "Sync Failed" sur les gros fichiers
+      - ServerSideApply=true
