@@ -22,11 +22,9 @@ spec:
   - from:
     - ipBlock:
         cidr: 192.168.1.114/32 
-    # 2. Autorise les IPs internes de K3s (pour la VM elle-même)
+    # 2. Autorise les IPs internes de K3s (pour la VM elle-même)    
     - ipBlock:
-        cidr: 10.42.0.0/16 # Réseau des Pods K3s
-    - ipBlock:
-        cidr: 127.0.0.1/32
+        cidr: 192.168.1.104/32 # Réseau des Pods K3s
     ports:
     - protocol: TCP
       port: 5000
