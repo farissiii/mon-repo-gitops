@@ -15,6 +15,8 @@ spec:
           adminPassword: "admin"
           service:
             type: NodePort
+            nodePort: 30552
+        
         prometheus:
           prometheusSpec:
             retention: 1d
@@ -22,13 +24,39 @@ spec:
               requests:
                 memory: "400Mi"
               limits:
-                memory: "800Mi"
+                memory: "900Mi"
+            
+            # S16: Connexion à Docker et ton PC Local
+            additionalScrapeConfigs:
+              - job_name: 'docker-jenkins'
+                static_configs:
+                  - targets: ['192.168.1.104:9323'] # IP de ta VM
+              - job_name: 'mon-pc-local'
+                static_configs:
+                  - targets: ['192.168.1.15:9182'] # IP de ton PC (à vérifier)
+
+            # S16: Règles d'alertes personnalisées
+            additionalPrometheusRulesMap:
+              custom-rules:
+                groups:
+                  - name: MyDevOpsAlerts
+                    rules:
+                      - alert: FlaskAppDown
+                        expr: up{pod=~"flask-app.*"} == 0
+                        for: 1m
+                        labels:
+                          severity: critical
+                        annotations:
+                          summary: "ALERTE: L'application Python est tombée !"
+
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: monitoring
+  
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true # Pour éviter le "Sync Failed" sur les gros fichiers
