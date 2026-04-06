@@ -22,6 +22,8 @@ spec:
   - from:
     - ipBlock:
         cidr: 192.168.1.104/32 # <--- METS TON IP ICI avec /32
+    - ipBlock:
+        cidr: 192.168.1.114/32 
     ports:
     - protocol: TCP
       port: 5000
