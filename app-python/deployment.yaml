@@ -16,4 +16,11 @@ spec:
       - name: flask-app
         image: khaliiiiid/mon-app-python:1.0.28
         ports:
-        - containerPort: 5000      
+        - containerPort: 5000 
+        resources: # <--- AJOUTE ÇA
+          requests:
+            cpu: "100m" # On demande un peu de CPU
+            memory: "128Mi"
+          limits:
+            cpu: "200m" # On limite pour ne pas faire crasher le worker
+            memory: "256Mi"
