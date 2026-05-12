@@ -16,13 +16,4 @@ spec:
       - name: flask-app
         image: khaliiiiid/mon-app-python:1.0.28
         ports:
-        - containerPort: 5000
-        # AJOUTE ÇA : C'est le moteur de l'auto-scaling
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "128Mi"
-          limits:
-            cpu: "200m"
-            memory: "256Mi"
-            
+        - containerPort: 5000      
