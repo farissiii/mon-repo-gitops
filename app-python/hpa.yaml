@@ -9,11 +9,11 @@ spec:
     kind: Deployment
     name: flask-app-deployment
   minReplicas: 1
-  maxReplicas: 8 # Ton cluster peut monter jusqu'à 5 serveurs Flask
+  maxReplicas: 5 # Ton cluster peut monter jusqu'à 5 serveurs Flask
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 90 # Si le pod dépasse 50% de CPU, on en crée un nouveau
+        averageUtilization: 60 # Si le pod dépasse 50% de CPU, on en crée un nouveau
