@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: flask-app-deployment
 spec:
-  replicas: 0
+  replicas: 1 # On commence avec 1
   selector:
     matchLabels:
       app: flask-app
@@ -17,3 +17,9 @@ spec:
         image: khaliiiiid/mon-app-python:1.0.28
         ports:
         - containerPort: 5000
+        # AJOUTE ÇA : C'est le moteur de l'auto-scaling
+        resources:
+          requests:
+            cpu: "100m"
+          limits:
+            cpu: "200m"
