@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: flask-app-deployment
 spec:
-  replicas: 0 # On commence avec 1
+  replicas: 1 # On commence avec 1
   selector:
     matchLabels:
       app: flask-app
