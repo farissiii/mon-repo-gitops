@@ -20,8 +20,8 @@ spec:
       port: 5000
   # Règle 2 : Autoriser le trafic extérieur (ton navigateur)
   - from:
-    #- ipBlock:
-     #   cidr: 192.168.1.114/32 
+    - ipBlock:
+        cidr: 192.168.1.103/32 
     # 2. Autorise les IPs internes de K3s (pour la VM elle-même)    
     - ipBlock:
         cidr: 192.168.1.104/32 # Réseau des Pods K3s
